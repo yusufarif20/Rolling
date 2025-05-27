@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Undian Futuristik</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap');
+    
+    :root {
+      --primary: #00f7ff;
+      --secondary: #ff00aa;
+      --accent: #7700ff;
+      --dark: #0a0a1a;
+      --darker: #050510;
+      --light: #e0e0ff;
+      --success: #00ff88;
+      --glow: 0 0 10px rgba(0, 247, 255, 0.7);
+      --transition: all 0.3s cubic-bezier(0.65, 0.05, 0.36, 1);
+    }
+    
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      text-align: center;
+      background: var(--darker);
+      min-height: 100vh;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: var(--light);
+      overflow-x: hidden;
+    }
+    
+    .network-lines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(0, 247, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 247, 255, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: -1;
+    }
+    
+    .container {
+      background: rgba(10, 10, 26, 0.8);
+      border-radius: 8px;
+      padding: 2.5rem;
+      box-shadow: 0 0 30px rgba(0, 247, 255, 0.2);
+      width: 90%;
+      max-width: 600px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(0, 247, 255, 0.2);
+      backdrop-filter: blur(5px);
+    }
+    
+    .container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      box-shadow: var(--glow);
+    }
+    
+    h1 {
+      color: var(--primary);
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      font-family: 'Orbitron', sans-serif;
+      text-shadow: 0 0 10px rgba(0, 247, 255, 0.5);
+      letter-spacing: 2px;
+    }
+    
+    p {
+      color: var(--light);
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+    
+    #namaInput {
+      width: 80%;
+      height: 120px;
+      padding: 15px;
+      margin-bottom: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--primary);
+      border-radius: 5px;
+      color: var(--light);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      resize: none;
+      transition: var(--transition);
+    }
+    
+    #namaInput:focus {
+      outline: none;
+      border-color: var(--secondary);
+      box-shadow: 0 0 15px rgba(0, 247, 255, 0.5);
+    }
+    
+    #rollResult {
+      font-size: 3rem;
+      font-weight: 700;
+      margin: 1.5rem 0;
+      color: var(--primary);
+      transition: var(--transition);
+      min-height: 120px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Orbitron', sans-serif;
+      text-shadow: 0 0 10px var(--primary);
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      border: 1px solid rgba(0, 247, 255, 0.3);
+      padding: 20px;
+      position: relative;
+    }
+    
+    button {
+      background: linear-gradient(45deg, var(--primary), var(--accent));
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: var(--transition);
+      color: var(--dark);
+      font-weight: 700;
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin: 10px;
+      box-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, var(--secondary), var(--primary));
+      opacity: 0;
+      transition: var(--transition);
+      z-index: -1;
+    }
+    
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 25px rgba(0, 247, 255, 0.5);
+      color: var(--dark);
+    }
+    
+    button:hover::before {
+      opacity: 1;
+    }
+    
+    button:active {
+      transform: translateY(1px);
+    }
+    
+    .funnyText {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      color: var(--secondary);
+      font-weight: 600;
+      min-height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0.8rem;
+      border-radius: 5px;
+      background-color: rgba(255, 0, 170, 0.1);
+      transition: var(--transition);
+      font-family: 'Rajdhani', sans-serif;
+      text-shadow: 0 0 5px rgba(255, 0, 170, 0.5);
+      border: 1px solid rgba(255, 0, 170, 0.2);
+    }
+    
+    .binary-code {
+      position: absolute;
+      color: rgba(0, 247, 255, 0.1);
+      font-size: 0.8rem;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    @keyframes scanline {
+      0% { top: -100%; }
+      100% { top: 100%; }
+    }
+    
+    .scanline {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0, 247, 255, 0.1) 50%,
+        transparent 100%
+      );
+      animation: scanline 3s linear infinite;
+      pointer-events: none;
+    }
+    
+    @keyframes flicker {
+      0% { opacity: 0.8; }
+      20% { opacity: 0.6; }
+      40% { opacity: 0.9; }
+      60% { opacity: 0.7; }
+      80% { opacity: 0.8; }
+      100% { opacity: 1; }
+    }
+    
+    .flicker {
+      animation: flicker 0.5s infinite alternate;
+    }
+    
+    @keyframes pulse {
+      0% { box-shadow: 0 0 5px var(--primary); }
+      50% { box-shadow: 0 0 20px var(--primary); }
+      100% { box-shadow: 0 0 5px var(--primary); }
+    }
+    
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+    
+    .success-animation {
+      position: relative;
+    }
+    
+    .success-animation::after {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      border: 2px solid var(--success);
+      border-radius: 5px;
+      animation: pulse 1.5s infinite;
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="network-lines"></div>
+  <div class="scanline"></div>
+  
+  <div class="container">
+    <h1>🌐 NETWORK PICKER 2.0</h1>
+
+    <p>Masukkan daftar nama (satu per baris):</p>
+    <textarea id="namaInput" placeholder="Contoh:\nNeo\nTrinity\nMorpheus"></textarea><br>
+    <button onclick="simpanNama()">INITIALIZE</button><br>
+    <button onclick="mulaiRoll()" class="pulse">START SCAN</button>
+
+    <div id="rollResult">[WAITING FOR INPUT]</div>
+    <div class="funnyText" id="funnyText">SYSTEM READY...</div>
+  </div>
+
+  <audio id="rollSound">
+    <source src="https://www.fesliyanstudios.com/play-mp3/387" type="audio/mpeg">
+  </audio>
+
+  <script>
+    let namaList = [];
+
+    const kataLucu = [
+      "SCANNING DATABASE...",
+      "DECRYPTING DATA...",
+      "ANALYZING POSSIBILITIES...",
+      "NEURAL NETWORK PROCESSING...",
+      "QUANTUM COMPUTING ENGAGED...",
+      "PATTERN RECOGNITION ACTIVE...",
+      "SYSTEM OVERLOAD... JUST KIDDING!",
+      "THIS IS NOT A DRILL...",
+      "ALGORITHMS RUNNING...",
+      "TARGET ACQUIRED:"
+    ];
+
+    function createBinaryCode() {
+      const container = document.querySelector('.container');
+      for (let i = 0; i < 50; i++) {
+        const binary = document.createElement('div');
+        binary.className = 'binary-code';
+        binary.textContent = Math.random().toString(2).substring(2, 15);
+        binary.style.left = `${Math.random() * 100}%`;
+        binary.style.top = `${Math.random() * 100}%`;
+        binary.style.animationDelay = `${Math.random() * 5}s`;
+        container.appendChild(binary);
+      }
+    }
+
+    function simpanNama() {
+      const input = document.getElementById('namaInput').value;
+      namaList = input.split('\n').map(n => n.trim()).filter(n => n);
+      if (namaList.length === 0) {
+        document.getElementById("rollResult").innerText = "[ERROR: NO DATA]";
+        document.getElementById("funnyText").innerText = "PLEASE INPUT VALID DATA";
+        document.getElementById("rollResult").classList.add('flicker');
+        setTimeout(() => {
+          document.getElementById("rollResult").classList.remove('flicker');
+        }, 1000);
+      } else {
+        document.getElementById("rollResult").innerText = `[LOADED: ${namaList.length} ENTRIES]`;
+        document.getElementById("funnyText").innerText = "DATABASE INITIALIZED";
+      }
+    }
+
+    function mulaiRoll() {
+      if (namaList.length === 0) {
+        document.getElementById("rollResult").innerText = "[ERROR: NO DATA]";
+        document.getElementById("funnyText").innerText = "PLEASE INITIALIZE FIRST";
+        document.getElementById("rollResult").classList.add('flicker');
+        setTimeout(() => {
+          document.getElementById("rollResult").classList.remove('flicker');
+        }, 1000);
+        return;
+      }
+
+      let resultDiv = document.getElementById("rollResult");
+      let funnyText = document.getElementById("funnyText");
+      let rollSound = document.getElementById("rollSound");
+
+      rollSound.play();
+
+      let count = 0;
+      let maxCount = 25;
+
+      resultDiv.classList.add('flicker');
+      
+      let rollInterval = setInterval(() => {
+        let namaAcak = namaList[Math.floor(Math.random() * namaList.length)];
+        resultDiv.innerText = `> ${namaAcak.toUpperCase()}`;
+        funnyText.innerText = kataLucu[Math.floor(Math.random() * kataLucu.length)];
+        count++;
+        if (count >= maxCount) {
+          clearInterval(rollInterval);
+          resultDiv.classList.remove('flicker');
+          const index = Math.floor(Math.random() * namaList.length);
+          const namaTerpilih = namaList.splice(index, 1)[0];
+          resultDiv.innerHTML = `🎯 <span class="success-animation">${namaTerpilih.toUpperCase()}</span> 🎯`;
+          funnyText.innerText = "TARGET CONFIRMED";
+          
+          // Add confetti effect
+          for (let i = 0; i < 30; i++) {
+            createParticle();
+          }
+        }
+      }, 100);
+    }
+
+    function createParticle() {
+      const particle = document.createElement('div');
+      particle.style.position = 'absolute';
+      particle.style.width = '5px';
+      particle.style.height = '5px';
+      particle.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+      particle.style.borderRadius = '50%';
+      particle.style.left = `${50 + (Math.random() - 0.5) * 20}%`;
+      particle.style.top = '40%';
+      particle.style.pointerEvents = 'none';
+      particle.style.boxShadow = '0 0 10px currentColor';
+      
+      document.querySelector('.container').appendChild(particle);
+      
+      const animation = particle.animate([
+        { transform: 'translate(0, 0)', opacity: 1 },
+        { transform: `translate(${(Math.random() - 0.5) * 200}px, ${Math.random() * 100 + 50}px)`, opacity: 0 }
+      ], {
+        duration: 1000 + Math.random() * 1000,
+        easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+      });
+      
+      animation.onfinish = () => particle.remove();
+    }
+
+    // Initialize binary code on load
+    window.onload = createBinaryCode;
+  </script>
+</body>
+</html>
